@@ -60,6 +60,7 @@ function opcodesCaller(x, y) {
 
 // Gives all the options for a operation
 function printBetterResults(resultsArr,x,y) {
+    document.getElementById("bodyTable").innerHTNL = ""; //clear table
   //let sample = "";
   for (let lmao of resultsArr) {
     let row = document.createElement("tr");
