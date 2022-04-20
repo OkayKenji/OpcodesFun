@@ -1,4 +1,5 @@
 // Intital function to react to user intreaction
+// 🔢🔢🔢 
 function parentOpcodesCaller() {
     //Get usr input
     let x = parseInt(document.getElementById("x-input").value), y = parseInt(document.getElementById("y-input").value);
@@ -60,7 +61,7 @@ function opcodesCaller(x, y) {
 
 // Gives all the options for a operation
 function printBetterResults(resultsArr,x,y) {
-    document.getElementById("bodyTable").innerHTNL = ""; //clear table
+    document.getElementById("bodyTable").innerHTML = ""; //clear table
   //let sample = "";
   for (let lmao of resultsArr) {
     let row = document.createElement("tr");
@@ -234,3 +235,5 @@ function convert_2(dec, flagList) {
     // theString[32] = '\0'; // Null 0, indicates termination of string
     // return theString;
 }
+
+// Programed with ❤️ by Kenji //
