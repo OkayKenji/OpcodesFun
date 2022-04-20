@@ -30,6 +30,7 @@ function opcodesCaller(x, y) {
 
     // Table header + stores 
     let fullAnswer = "zx,nx,zy,ny,f,no,x,y\n";
+    let sample = "";
 
     // There's 64 possible combinations of the flag 0 and 1, does every one of them.
     for (let i = 0; i < 64; i++) {
@@ -42,14 +43,45 @@ function opcodesCaller(x, y) {
         // If an expected result matches what's outputed in the ALU, flag correspods maybe
         let mem = [];
         for (let j = 0; j < resultsArr.length; j++) {
-            if (ans == resultsArr[j][1])
+            if (ans == resultsArr[j][1]) {
                 mem.push(resultsArr[j][0]);
+                resultsArr[j][2].push(i);
+              //sample+= `${resultsArr[j][0]} may be solved by: ${flagList}\n`
+            }
         }
         fullAnswer += `${flagList} Answer: ${ansFormater(ans)} Which may be: ${mem}\n`;
+        //sample+= `${resultsArr[j][0]} may be solved by: ${resultsArr[j][3]}`
     }
 
-    // Displays 
+    printBetterResults(resultsArr,x,y) ;
     document.getElementById("answerArea").innerText = fullAnswer;
+   // document.getElementById("sampleArea").innerText = sample;
+}
+
+// Gives all the options for a operation
+function printBetterResults(resultsArr,x,y) {
+  //let sample = "";
+  for (let lmao of resultsArr) {
+    let row = document.createElement("tr");
+   // sample += `${lmao[0]} has the results of: `
+    let col1 = document.createElement("td")
+    col1.innerText = `${lmao[0]} has the results of `;
+    col1.width = "200px";
+    row.appendChild(col1);
+    
+    for (let lol of lmao[2]) {
+      let flagList = [0, 0, 0, 0, 0, 0, x, y];
+      convert_2(lol,flagList);
+    //  sample+= `${flagList} or `;
+
+      let cols = document.createElement("td")
+      cols.innerText = `${flagList}`;
+      row.appendChild(cols);
+    }
+   // sample+=`actually there's more options\n`;
+    document.getElementById("bodyTable").appendChild(row);
+  }
+   // document.getElementById("sampleArea").innerText = sample;
 }
 
 // Yes, I purposely used switched statement here to annoy my professor. 
@@ -60,75 +92,75 @@ function resultSampler(x,y,resultsArr) {
           switch (i) {
               case 0:
                   results += `X: ${x}\n`;
-                  resultsArr.push(["X", x]);
-                  break;
+                  resultsArr.push(["X", x,[]]);
+                 break;
               case 1:
                   results += `Y: ${y}\n`;
-                  resultsArr.push(["Y", y]);
+                  resultsArr.push(["Y", y,[]]);
                   break;
               case 2:
                   results += `X&Y: ${x&y}\n`;
-                  resultsArr.push(["X&Y", x & y]);
+                  resultsArr.push(["X&Y", x & y,[]]);
                   break;
               case 3:
                   results += `X|Y: ${x|y}\n`;
-                  resultsArr.push(["X|Y", x | y]);
+                  resultsArr.push(["X|Y", x | y,[]]);
                   break;
               case 4:
                   results += `~X: ${~x}\n`;
-                  resultsArr.push(["~X", ~x]);
+                  resultsArr.push(["~X", ~x,[]]);
                   break;
               case 5:
                   results += `~Y: ${~y}\n`;
-                  resultsArr.push(["~Y", ~y]);
+                  resultsArr.push(["~Y", ~y,[]]);
                   break;
               case 6:
                   results += `X+Y: ${x+y}\n`;
-                  resultsArr.push(["X+Y", x + y]);
+                  resultsArr.push(["X+Y", x + y,[]]);
                   break;
               case 7:
                   results += `X-Y: ${x-y}\n`;
-                  resultsArr.push(["X-Y", x - y]);
+                  resultsArr.push(["X-Y", x - y,[]]);
                   break;
               case 8:
                   results += `Y-X: ${y-x}\n`;
-                  resultsArr.push(["Y-X", y - x]);
+                  resultsArr.push(["Y-X", y - x,[]]);
                   break;
               case 9:
                   results += `0: ${0}\n`;
-                  resultsArr.push(["0", 0]);
+                  resultsArr.push(["0", 0,[]]);
                   break;
               case 10:
                   results += `-1: ${-1}\n`;
-                  resultsArr.push(["-1", -1]);
+                  resultsArr.push(["-1", -1,[]]);
                   break;
               case 11:
                   results += `1: ${1}\n`;
-                  resultsArr.push(["1", 1]);
+                  resultsArr.push(["1", 1,[]]);
                   break;
               case 12:
                   results += `-X: ${0-x}\n`;
-                  resultsArr.push(["-X", 0 - x]);
+                  resultsArr.push(["-X", 0 - x,[]]);
                   break;
               case 13:
                   results += `-Y ${0-y}\n`;
-                  resultsArr.push(["-Y", 0 - y]);
+                  resultsArr.push(["-Y", 0 - y,[]]);
                   break;
               case 14:
                   results += `X+1: ${x+1}\n`;
-                  resultsArr.push(["X+1", x + 1]);
+                  resultsArr.push(["X+1", x + 1,[]]);
                   break;
               case 15:
                   results += `Y+1: ${y+1}\n`;
-                  resultsArr.push(["Y+1", y + 1]);
+                  resultsArr.push(["Y+1", y + 1,[]]);
                   break;
               case 16:
                   results += `X-1: ${x-1}\n`;
-                  resultsArr.push(["X-1", x - 1]);
+                  resultsArr.push(["X-1", x - 1,[]]);
                   break;
               case 17:
                   results += `Y-1: ${y-1}\n`;
-                  resultsArr.push(["Y-1", y - 1]);
+                  resultsArr.push(["Y-1", y - 1,[]]);
                   break;
           }
       }
